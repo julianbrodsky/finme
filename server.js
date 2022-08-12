@@ -10,19 +10,26 @@ const url = process.env.MONGOURL
 MongoClient.connect(url, { useUnifiedTopology: true })
   .then(client => {
     console.log('Connected to Database')
+    const db = client.db('myfinme-stocks')
+    const stockCollection = db.collection('stocks')
+
+    app.listen(2022, function(){
+        console.log(`Your fridge is running on port ${PORT}, better catch it!`)
+    })
+    
+    app.use(bodyParser.urlencoded({ extended: true }))
+    
+    app.get('/', function(req, res){
+        res.sendFile(__dirname + '/index.html')
+    })
+    
+    app.post('/stocks', function(req, res){
+    stockCollection.insertOne(req.body)
+        .then(result =>{
+            res.redirect('/')
+        })
+        .catch(error => console.error(error))
+    })
+
   })
   .catch(error => console.error(error))
-
-app.listen(2022, function(){
-    console.log(`Your fridge is running on port ${PORT}, better catch it!`)
-})
-
-app.use(bodyParser.urlencoded({ extended: true }))
-
-app.get('/', function(req, res){
-    res.sendFile(__dirname + '/index.html')
-})
-
-app.post('/stocks', function(req, res){
-console.log(req.body)
-})
