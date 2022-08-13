@@ -16,11 +16,19 @@ MongoClient.connect(url, { useUnifiedTopology: true })
     app.listen(2022, function(){
         console.log(`Your fridge is running on port ${PORT}, better catch it!`)
     })
+
+    app.set('view engine', 'ejs')
     
     app.use(bodyParser.urlencoded({ extended: true }))
+    app.use('/public', express.static('public'))
     
     app.get('/', function(req, res){
-        res.sendFile(__dirname + '/index.html')
+        const cursor = db.collection('stocks').find().toArray()
+        .then(results => {
+            console.log(results)
+            res.render('index.ejs', { stocks: results })
+        })
+        .catch(error => console.error(error))
     })
     
     app.post('/stocks', function(req, res){
