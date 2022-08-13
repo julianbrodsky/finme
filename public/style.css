@@ -71,6 +71,7 @@ input, textarea, button{
     background-color: black;
     color: lightskyblue;
     margin: .2rem;
+    flex: 0 0 40%;
 }
 
 input::placeholder, textarea::placeholder{
