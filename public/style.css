@@ -1,3 +1,17 @@
 h1{
     color: blue;
 }
+
+header{
+    height: 200px;
+    width: 100vw;  
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    background: #0d1122;
+}
+
+img{
+    height: 200px;
+
+}
