@@ -4,7 +4,7 @@ const dotenv = require('dotenv')
 dotenv.config()
 const MongoClient = require('mongodb').MongoClient
 const app = express()
-const PORT = 2022
+const PORT = process.env.PORT || 2022
 const url = process.env.MONGOURL
 
 MongoClient.connect(url, { useUnifiedTopology: true })
@@ -13,7 +13,7 @@ MongoClient.connect(url, { useUnifiedTopology: true })
     const db = client.db('myfinme-stocks')
     const stockCollection = db.collection('stocks')
 
-    app.listen(2022, function(){
+    app.listen(PORT, function(){
         console.log(`Your fridge is running on port ${PORT}, better catch it!`)
     })
 
