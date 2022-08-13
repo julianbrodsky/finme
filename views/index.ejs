@@ -4,21 +4,31 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- eric meyer reset -->
     <link rel="stylesheet" href="/public/reset.css">
+    <!-- monoton font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+    <!-- main stylesheet -->
     <link rel="stylesheet" href="/public/style.css">
+    <!-- favicon -->
+    <link rel="icon" type="image/x-icon" href="/public/favicon.ico">
+
     <title>finme</title>
 </head>
 <header>
-    <img src="/public/logo.png">
+    <img src="/public/logocropped.png">
+    <h1>julian's investments</h1>
 </header>
 <body>
-    <h1>welcome to finme</h1>
     <ul class="stocks">
         <!-- Loop through quotes -->
         <% for(var i = 0; i < stocks.length; i++) {%>
           <li class="stock">
-            <span><%= stocks[i].ticker %></span>:
-            <span><%= stocks[i].investment %></span>
+            <span class="tickerS"><%= stocks[i].ticker %></span>
+            <span class="dollarS">$<%= stocks[i].investment %></span>
+            <span class="thesiS"><%= stocks[i].thesis %></span>
           </li>
         <% } %>
       </ul>
@@ -26,6 +36,7 @@
     <form action="/stocks" method="POST">
         <input type="text" placeholder="ticker" name="ticker">
         <input type="text" placeholder="investment" name="investment">
+        <textarea name="thesis" placeholder="thesis" class="thesisInput"></textarea>
         <button type="submit">submit</button>
         </form>
 </body>

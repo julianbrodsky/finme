@@ -23,7 +23,7 @@ MongoClient.connect(url, { useUnifiedTopology: true })
     app.use('/public', express.static('public'))
     
     app.get('/', function(req, res){
-        const cursor = db.collection('stocks').find().toArray()
+        const cursor = db.collection('stocks').find().sort({"investment":-1}).toArray()
         .then(results => {
             console.log(results)
             res.render('index.ejs', { stocks: results })
