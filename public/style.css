@@ -64,3 +64,15 @@ form{
     flex-flow: column nowrap;
     align-items: center;
 }
+
+input, textarea, button{
+    border-radius: 1rem;
+    border: 5px solid palevioletred;
+    background-color: black;
+    color: lightskyblue;
+    margin: .2rem;
+}
+
+input::placeholder, textarea::placeholder{
+    color: lightskyblue;
+}
