@@ -23,7 +23,31 @@ MongoClient.connect(url, { useUnifiedTopology: true })
     app.use('/public', express.static('public'))
     
     app.get('/', function(req, res){
+
         const cursor = db.collection('stocks').find().sort({"investment":-1}).toArray()
+        .then(results => {
+            let dollars = []
+            results.forEach( (item, index) => {
+                fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${item.ticker}&apikey=RWCO7X3U4LDYNTPG`)
+                .then(alp => alp.json())
+                .then(alp => {
+                    let tickerPQ = [item.ticker, alp['Global Quote']['05. price'], results[index]['investment']]
+                    console.log(tickerPQ)
+                    dollars[index] = alp['Global Quote']['05. price']
+                    stockCollection.updateOne({
+                        ticker: item.ticker
+                    }, {
+                        $set: {
+                            price: alp['Global Quote']['05. price']
+                        }
+                    })
+                    
+                })
+                .catch(err => console.log(err))
+                
+            })
+            return(results)
+        })
         .then(results => {
             res.render('index.ejs', { stocks: results })
         })
